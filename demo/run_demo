@@ -34,7 +34,7 @@ case "$@" in *--timing*)
 esac
 
 if [ "$AGENT" = "faber" ]; then
-	AGENT_MODULE="faber"
+	AGENT_MODULE="regov"
 	AGENT_PORT=8020
 	AGENT_PORT_RANGE=8020-8027
 elif [ "$AGENT" = "alice" ]; then
@@ -50,7 +50,7 @@ elif [ "$AGENT" = "performance" ]; then
 	AGENT_PORT=8030
 	AGENT_PORT_RANGE=8030-8038
 else
-	echo "Please specify which agent you want to run. Choose from 'faber', 'alice', 'acme', or 'performance'."
+	echo "Please specify which agent you want to run. Choose from 'regov', 'alice', 'acme', or 'performance'."
 	exit 1
 fi
 

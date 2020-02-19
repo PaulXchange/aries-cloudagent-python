@@ -191,15 +191,17 @@ async def actionmenu_send(request: web.BaseRequest):
     raise web.HTTPForbidden()
 
 
-async def register(app: web.Application):
-    """Register routes."""
-
-    app.add_routes(
-        [
-            web.post("/action-menu/{id}/close", actionmenu_close),
-            web.post("/action-menu/{id}/fetch", actionmenu_fetch),
-            web.post("/action-menu/{id}/perform", actionmenu_perform),
-            web.post("/action-menu/{id}/request", actionmenu_request),
-            web.post("/connections/{id}/send-menu", actionmenu_send),
-        ]
-    )
+#
+# async def register(app: web.Application):
+#    """Register routes."""
+#
+#    app.add_routes(
+#        [
+#            web.post("/action-menu/{id}/close", actionmenu_close),
+#            web.post("/action-menu/{id}/fetch", actionmenu_fetch),
+#            web.post("/action-menu/{id}/perform", actionmenu_perform),
+#            web.post("/action-menu/{id}/request", actionmenu_request),
+#            web.post("/connections/{id}/send-menu", actionmenu_send),
+#        ]
+#    )
+#

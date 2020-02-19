@@ -154,26 +154,29 @@ async def main(start_port: int, show_timing: bool = False):
                 _,  # schema id
                 credential_definition_id,
             ) = await agent.register_schema_and_creddef(
-                "degree schema", version, ["name", "date", "degree", "age"]
+                "degree schema", version, ["name", "gender",
+                                           "state", "country", "postal_code", "city", "type", "address1", "citizenship", "cognito_sub", "religion", "date_of_birth"]
             )
 
         # TODO add an additional credential for Student ID
 
-        with log_timer("Generate invitation duration:"):
-            # Generate an invitation
-            log_status(
-                "#5 Create a connection to alice and print out the invite details"
-            )
-            connection = await agent.admin_POST("/connections/create-invitation")
+        # Commented out. Invitation will be from API Interface
 
-        agent.connection_id = connection["connection_id"]
-        log_json(connection, label="Invitation response:")
-        log_msg("*****************")
-        log_msg(json.dumps(connection["invitation"]), label="Invitation:", color=None)
-        log_msg("*****************")
+        # with log_timer("Generate invitation duration:"):
+        #     # Generate an invitation
+        #     log_status(
+        #         "#5 Create a connection to alice and print out the invite details"
+        #     )
+        #     connection = await agent.admin_POST("/connections/create-invitation")
 
-        log_msg("Waiting for connection...")
-        await agent.detect_connection()
+        # agent.connection_id = connection["connection_id"]
+        # log_json(connection, label="Invitation response:")
+        # log_msg("*****************")
+        # log_msg(json.dumps(connection["invitation"]), label="Invitation:", color=None)
+        # log_msg("*****************")
+
+        # log_msg("Waiting for connection...")
+        # await agent.detect_connection()
 
         async for option in prompt_loop(
             "(1) Issue Credential, (2) Send Proof Request, "
@@ -188,9 +191,17 @@ async def main(start_port: int, show_timing: bool = False):
                 # TODO define attributes to send for credential
                 agent.cred_attrs[credential_definition_id] = {
                     "name": "Alice Smith",
-                    "date": "2018-05-28",
-                    "degree": "Maths",
-                    "age": "24",
+                    "gender": "Female",
+                    "state": "Selangor",
+                    "country": "Malaysian",
+                    "postcal_code": "46052",
+                    "city": "Petailing Jaya",
+                    "type": "MyKad",
+                    "address1": "PJ8 Service Suite",
+                    "citizenship": "Malaysian",
+                    "cognito_sub": "11022",
+                    "religion": "Muslim",
+                    "date_of_birth": "1/1/1900",
                 }
 
                 cred_preview = {
@@ -211,23 +222,36 @@ async def main(start_port: int, show_timing: bool = False):
                 # TODO issue an additional credential for Student ID
 
             elif option == "2":
-                log_status("#20 Request proof of degree from alice")
+                log_status("#20 Request proof of credential from agent")
                 req_attrs = [
                     {"name": "name", "restrictions": [{"issuer_did": agent.did}]},
-                    {"name": "date", "restrictions": [{"issuer_did": agent.did}]},
-                    {"name": "degree", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "gender", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "state", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "country", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "postal_code", "restrictions": [
+                        {"issuer_did": agent.did}]},
+                    {"name": "city", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "type", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "address1", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "citizenship", "restrictions": [
+                        {"issuer_did": agent.did}]},
+                    {"name": "cognito_sub", "restrictions": [
+                        {"issuer_did": agent.did}]},
+                    {"name": "religion", "restrictions": [{"issuer_did": agent.did}]},
+                    {"name": "date_of_birth", "restrictions": [
+                        {"issuer_did": agent.did}]},
                     {"name": "self_attested_thing"},
                 ]
                 req_preds = [
                     {
-                        "name": "age",
-                        "p_type": ">=",
-                        "p_value": 18,
+                        "name": "gender",
+                        "p_type": "==",
+                        "p_value": "Female",
                         "restrictions": [{"issuer_did": agent.did}],
                     }
                 ]
                 indy_proof_request = {
-                    "name": "Proof of Education",
+                    "name": "Proof of Regov Credential",
                     "version": "1.0",
                     "nonce": str(uuid4().int),
                     "requested_attributes": {
@@ -276,7 +300,7 @@ async def main(start_port: int, show_timing: bool = False):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Runs a Faber demo agent.")
+    parser = argparse.ArgumentParser(description="Runs a Regov Technology agent.")
     parser.add_argument(
         "-p",
         "--port",
