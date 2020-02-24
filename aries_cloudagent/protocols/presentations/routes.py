@@ -388,42 +388,39 @@ async def presentation_exchange_remove(request: web.BaseRequest):
     return web.json_response({})
 
 
-# To add line comments, execute editor.action.addCommentLine (CTRL+K CTRL+C)
-# To remove line comments, execute editor.action.removeCommentLine(CTRL+K CTRL+U)
+async def register(app: web.Application):
+    """Register routes."""
 
-# async def register(app: web.Application):
-#     """Register routes."""
-
-#     app.add_routes(
-#         [
-#             web.get("/presentation_exchange", presentation_exchange_list),
-#             web.get("/presentation_exchange/{id}", presentation_exchange_retrieve),
-#             web.get(
-#                 "/presentation_exchange/{id}/credentials",
-#                 presentation_exchange_credentials_list,
-#             ),
-#             web.get(
-#                 "/presentation_exchange/{id}/credentials/{referent}",
-#                 presentation_exchange_credentials_list,
-#             ),
-#             web.post(
-#                 "/presentation_exchange/create_request",
-#                 presentation_exchange_create_request,
-#             ),
-#             web.post(
-#                 "/presentation_exchange/send_request",
-#                 presentation_exchange_send_request,
-#             ),
-#             web.post(
-#                 "/presentation_exchange/{id}/send_presentation",
-#                 presentation_exchange_send_credential_presentation,
-#             ),
-#             web.post(
-#                 "/presentation_exchange/{id}/verify_presentation",
-#                 presentation_exchange_verify_credential_presentation,
-#             ),
-#             web.post(
-#                 "/presentation_exchange/{id}/remove", presentation_exchange_remove
-#             ),
-#         ]
-#     )
+    app.add_routes(
+        [
+            web.get("/presentation_exchange", presentation_exchange_list),
+            web.get("/presentation_exchange/{id}", presentation_exchange_retrieve),
+            web.get(
+                "/presentation_exchange/{id}/credentials",
+                presentation_exchange_credentials_list,
+            ),
+            web.get(
+                "/presentation_exchange/{id}/credentials/{referent}",
+                presentation_exchange_credentials_list,
+            ),
+            web.post(
+                "/presentation_exchange/create_request",
+                presentation_exchange_create_request,
+            ),
+            web.post(
+                "/presentation_exchange/send_request",
+                presentation_exchange_send_request,
+            ),
+            web.post(
+                "/presentation_exchange/{id}/send_presentation",
+                presentation_exchange_send_credential_presentation,
+            ),
+            web.post(
+                "/presentation_exchange/{id}/verify_presentation",
+                presentation_exchange_verify_credential_presentation,
+            ),
+            web.post(
+                "/presentation_exchange/{id}/remove", presentation_exchange_remove
+            ),
+        ]
+    )
