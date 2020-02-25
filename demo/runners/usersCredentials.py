@@ -24,7 +24,7 @@ from runners.support.utils import (
 LOGGER = logging.getLogger(__name__)
 
 
-class AliceAgent(DemoAgent):
+class UserAgent(DemoAgent):
     def __init__(self, http_port: int, admin_port: int, **kwargs):
         super().__init__(
             "Central Credential Agent",
