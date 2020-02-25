@@ -27,13 +27,13 @@ CRED_PREVIEW_TYPE = (
 LOGGER = logging.getLogger(__name__)
 
 
-class FaberAgent(DemoAgent):
+class IssuerAgent(DemoAgent):
     def __init__(self, http_port: int, admin_port: int, **kwargs):
         super().__init__(
-            "Faber Agent",
+            "Regov Issuer Agent",
             http_port,
             admin_port,
-            prefix="Faber",
+            prefix="Regov Issuer",
             extra_args=[] if os.getenv("NO_AUTO") else [
                 "--auto-accept-invites",
                 "--auto-accept-requests"
@@ -244,9 +244,9 @@ async def main(start_port: int, show_timing: bool = False):
                 ]
                 req_preds = [
                     {
-                        "name": "gender",
-                        "p_type": "==",
-                        "p_value": "Female",
+                        "name": "postal_code",
+                        "p_type": ">=",
+                        "p_value": 4000,
                         "restrictions": [{"issuer_did": agent.did}],
                     }
                 ]

@@ -20,13 +20,13 @@ from runners.support.utils import (
 LOGGER = logging.getLogger(__name__)
 
 
-class AcmeAgent(DemoAgent):
+class VerifierAgent(DemoAgent):
     def __init__(self, http_port: int, admin_port: int, **kwargs):
         super().__init__(
-            "Acme Agent",
+            "Regov Verifier Agent",
             http_port,
             admin_port,
-            prefix="Acme",
+            prefix="Regov Verifier",
             extra_args=["--auto-accept-invites", "--auto-accept-requests"],
             **kwargs,
         )
@@ -193,7 +193,7 @@ async def main(start_port: int, show_timing: bool = False):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Runs an Acme demo agent.")
+    parser = argparse.ArgumentParser(description="Runs a Regov Verifier agent.")
     parser.add_argument(
         "-p",
         "--port",

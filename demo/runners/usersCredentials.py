@@ -27,10 +27,10 @@ LOGGER = logging.getLogger(__name__)
 class AliceAgent(DemoAgent):
     def __init__(self, http_port: int, admin_port: int, **kwargs):
         super().__init__(
-            "Alice Agent",
+            "Central Credential Agent",
             http_port,
             admin_port,
-            prefix="Alice",
+            prefix="Cred Holder",
             extra_args=[] if os.getenv("NO_AUTO") else [
                 "--auto-accept-invites",
                 "--auto-accept-requests",
@@ -270,7 +270,7 @@ async def main(start_port: int, show_timing: bool = False):
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Runs an Alice demo agent.")
+    parser = argparse.ArgumentParser(description="Runs a Credential Holder agent.")
     parser.add_argument(
         "-p",
         "--port",
