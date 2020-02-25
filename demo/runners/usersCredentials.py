@@ -216,7 +216,7 @@ async def main(start_port: int, show_timing: bool = False):
 
     try:
         log_status("#7 Provision an agent and wallet, get back configuration details")
-        agent = AliceAgent(
+        agent = UserAgent(
             start_port, start_port + 1, genesis_data=genesis, timing=show_timing
         )
         await agent.listen_webhooks(start_port + 2)

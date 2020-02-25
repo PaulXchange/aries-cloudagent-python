@@ -99,7 +99,7 @@ async def main(start_port: int, show_timing: bool = False):
 
     try:
         log_status("#1 Provision an agent and wallet, get back configuration details")
-        agent = AcmeAgent(
+        agent = VerifierAgent(
             start_port, start_port + 1, genesis_data=genesis, timing=show_timing
         )
         await agent.listen_webhooks(start_port + 2)
@@ -109,44 +109,6 @@ async def main(start_port: int, show_timing: bool = False):
             await agent.start_process()
         log_msg("Admin url is at:", agent.admin_url)
         log_msg("Endpoint url is at:", agent.endpoint)
-
-        # Create a schema
-        log_status("#3 Create a new schema on the ledger")
-        with log_timer("Publish schema duration:"):
-            pass
-            # TODO define schema
-            # version = format(
-            #     "%d.%d.%d"
-            #     % (
-            #         random.randint(1, 101),
-            #         random.randint(1, 101),
-            #         random.randint(1, 101),
-            #     )
-            # )
-            # (
-            #     schema_id,
-            #     credential_definition_id,
-            # ) = await agent.register_schema_and_creddef(
-            #     "employee id schema",
-            #     version,
-            #     ["employee_id", "name", "date", "position"],
-            # )
-
-        with log_timer("Generate invitation duration:"):
-            # Generate an invitation
-            log_status(
-                "#5 Create a connection to alice and print out the invite details"
-            )
-            connection = await agent.admin_POST("/connections/create-invitation")
-
-        agent.connection_id = connection["connection_id"]
-        log_json(connection, label="Invitation response:")
-        log_msg("*****************")
-        log_msg(json.dumps(connection["invitation"]), label="Invitation:", color=None)
-        log_msg("*****************")
-
-        log_msg("Waiting for connection...")
-        await agent.detect_connection()
 
         async for option in prompt_loop(
             "(1) Issue Credential, (2) Send Proof Request, "
