@@ -110,6 +110,33 @@ async def main(start_port: int, show_timing: bool = False):
         log_msg("Admin url is at:", agent.admin_url)
         log_msg("Endpoint url is at:", agent.endpoint)
 
+        # Create a schema
+        log_status("#3 Create a new schema on the ledger")
+        with log_timer("Publish schema duration:"):
+            pass
+            # TODO define schema
+
+        async for option in prompt_loop(
+            "(1) Issue Credential, (2) Send Proof Request, "
+            + "(3) Send Message (X) Exit? [1/2/3/X] "
+        ):
+            if option in "xX":
+                break
+
+            elif option == "1":
+                log_status("#13 Issue credential offer to X")
+                # TODO credential offers
+
+            elif option == "2":
+                log_status("#20 Request proof of degree from alice")
+                # TODO presentation requests
+
+            elif option == "3":
+                msg = await prompt("Enter message: ")
+                await agent.admin_POST(
+                    f"/connections/{agent.connection_id}/send-message", {"content": msg}
+                )
+
         if show_timing:
             timing = await agent.fetch_timing()
             if timing:
