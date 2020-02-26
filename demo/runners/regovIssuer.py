@@ -128,7 +128,7 @@ async def main(start_port: int, show_timing: bool = False):
 
     try:
         log_status("#1 Provision an agent and wallet, get back configuration details")
-        agent = FaberAgent(
+        agent = IssuerAgent(
             start_port, start_port + 1, genesis_data=genesis, timing=show_timing
         )
         await agent.listen_webhooks(start_port + 2)
@@ -154,8 +154,8 @@ async def main(start_port: int, show_timing: bool = False):
                 _,  # schema id
                 credential_definition_id,
             ) = await agent.register_schema_and_creddef(
-                "degree schema", version, ["name", "gender",
-                                           "state", "country", "postal_code", "city", "type", "address1", "citizenship", "cognito_sub", "religion", "date_of_birth"]
+                "Identity schema", version, ["name", "gender",
+                                             "state", "country", "postal_code", "city", "type", "address1", "citizenship", "cognito_sub", "religion", "date_of_birth"]
             )
 
         # TODO add an additional credential for Student ID
